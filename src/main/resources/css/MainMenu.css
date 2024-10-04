@@ -1,0 +1,54 @@
+.startGame {
+    -fx-font-size: 25px;
+}
+
+.startGame:hover{
+    -fx-border-color: #319ebe; /* 设置为蓝色 */
+    -fx-background-color: #ececec; /* 设置为白色 */
+}
+
+.startGameCard {
+    -fx-background-color: #cbecff;
+    -fx-background-radius: 10px;
+    -fx-min-width: 290px;
+    -fx-min-height: 340px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 3, 3);
+}
+
+.text-field {
+    -fx-background-color: #f2feff; /* 设置背景颜色 */
+    -fx-text-fill: #333333; /* 设置文本颜色 */
+    -fx-padding: 5px; /* 设置内边距 */
+    -fx-border-color: #5ed3da; /* 设置边框颜色 */
+    -fx-border-width: 1px; /* 设置边框宽度 */
+    -fx-border-radius: 3px; /* 设置边框圆角半径 */
+}
+
+.text-field:hover {
+    -fx-background-color: #e0fbff;
+}
+
+/* 设置获得焦点时的样式 */
+.text-field:focused {
+    -fx-border-color: #007bff;
+    -fx-background-color: #e0fbff;
+}
+
+.invalid {
+    -fx-border-color: #ff4444;
+    -fx-background-color: #ffc7c7;
+}
+
+.invalid:hover {
+    -fx-border-color: #ff6464;
+    -fx-background-color: #ffebeb;
+}
+
+.invalid:focused {
+    -fx-border-color: #ff6464;
+    -fx-background-color: #ffebeb;
+}
+
+#invalidLabel {
+    -fx-text-fill: #ff4444; /* 设置文本颜色 */
+}

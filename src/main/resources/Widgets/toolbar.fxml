@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="cn.ayanamihoshiran.autoetshomework.globalUtils.controllers.Toolbar"
+            prefHeight="400.0" prefWidth="600.0">
+    <ToolBar prefHeight="55.0" style="-fx-background-color: #02D365;" fx:id="toolbar">
+        <!--#59E998-->
+        <cursor>
+            <Cursor fx:constant="DEFAULT"/>
+        </cursor>
+        <Label text=" AEH" styleClass="title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button onAction="#minimizeProgramme" styleClass="exitButton">
+            <graphic>
+                <FontIcon iconLiteral="fa-minus" styleClass="icon"/>
+            </graphic>
+        </Button>
+        <Button onAction="#exitProgramme" styleClass="exitButton">
+            <graphic>
+                <FontIcon iconLiteral="fa-times" styleClass="icon"/>
+            </graphic>
+        </Button>
+    </ToolBar>
+</AnchorPane>

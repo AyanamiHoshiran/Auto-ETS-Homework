@@ -1,0 +1,51 @@
+.root {
+    -fx-border-radius: 10px;
+    -fx-background-color: #d0ebdc;
+
+}
+
+.button {
+    -fx-background-color: white; /* 设置为白色 */
+    -fx-border-color: #00c4ff; /* 设置为蓝色 */
+    -fx-border-width: 2px; /* 设置边框宽度 */
+    -fx-border-radius: 3px; /* 设置边框圆角 */
+}
+
+
+
+.exitButton {
+    -fx-background-color: rgba(255, 255, 255, 0);
+    -fx-text-fill: white;
+    -fx-border-width: 0px; /* 设置边框宽度 */
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 100px; /* 设置边框圆角 */
+    -fx-transition: background 0.5s; /* 设置背景渐变过渡时间为0.5秒 */
+    -fx-background-insets: 0;
+}
+
+.exitButton:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.3); /* 鼠标悬停时，将背景透明度渐变为1.0 */
+}
+
+.icon {
+    -fx-fill: white;
+}
+
+.title {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.tool-bar {
+    -fx-background-radius: 10 10 0 0; /* 设置工具栏的背景圆角半径，这里的数值可以根据需要进行调整 */
+}
+/*.menu {
+    -fx-background-color: #1e4c59; /* 设置为蓝色
+    -fx-pref-height: 40px;
+    -fx-max-height: 40px;
+    -fx-min-height: 40px;
+    -fx-alignment: TOP_CENTER;
+    -fx-margin-top: -100;
+}*/
