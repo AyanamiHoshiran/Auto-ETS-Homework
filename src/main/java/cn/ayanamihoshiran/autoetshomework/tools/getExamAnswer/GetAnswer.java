@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static cn.ayanamihoshiran.autoetshomework.tools.getExamAnswer.LatestModifiedFolder.getLatestModifiedFolder;
 
 public class GetAnswer {
-    public static void use(String resourcePath) {
+    public static void use(String resourcePath) throws Exception{
         Path path = Path.of(resourcePath);
         String latestFolder = getLatestModifiedFolder(path);
         Log.info("Latest modified folder: " + latestFolder);
@@ -69,7 +69,7 @@ public class GetAnswer {
 
             Desktop.getDesktop().open(answerFiles.toFile());
         } catch (IOException e) {
-            Log.error("Failed to write answers to file", String.valueOf(e));
+            throw new IOException("Failed to write answers to file", e);
         }
     }
 

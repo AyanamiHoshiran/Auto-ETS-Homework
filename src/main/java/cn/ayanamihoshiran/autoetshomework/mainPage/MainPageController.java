@@ -145,7 +145,18 @@ public class MainPageController implements Initializable {
             alert.showAndWait();
             return;
         }
-        GetAnswer.use(resourcePath);
+
+        try {
+            GetAnswer.use(resourcePath);
+        } catch (Exception e) {
+            Log.error("获取答案失败: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("获取答案失败");
+            alert.setHeaderText(null);
+            alert.setContentText("获取答案失败: " + e.getMessage());
+            alert.showAndWait();
+            return;
+        }
         etsExamAnswer.setText("答案已生成");
         etsExamAnswer.setStyle("-fx-text-fill: green;");
     }
