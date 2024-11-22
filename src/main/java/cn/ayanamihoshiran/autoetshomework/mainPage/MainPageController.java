@@ -6,26 +6,20 @@ import cn.ayanamihoshiran.autoetshomework.manager.ConfigManager;
 import cn.ayanamihoshiran.autoetshomework.tools.getExamAnswer.GetAnswer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
-import static cn.ayanamihoshiran.autoetshomework.Application.*;
+import static cn.ayanamihoshiran.autoetshomework.Application.app;
+import static cn.ayanamihoshiran.autoetshomework.Application.config;
 
 public class MainPageController implements Initializable {
     @FXML
@@ -38,7 +32,6 @@ public class MainPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Config config = ConfigManager.loadConfig();
         if (config != null) {
-//            updateCoordinatesLabel(config.getRecord_coordinates());
             updateEtsResourcePathLabel(new File(config.getEtsResourcePath()));
         }
     }
@@ -53,7 +46,7 @@ public class MainPageController implements Initializable {
         }
     }
 
-    public void select_coordinate() {
+/*    public void select_coordinate() {
         Stage overlayStage = new Stage(StageStyle.TRANSPARENT);
         StackPane overlayRoot = new StackPane();
         overlayRoot.setStyle("-fx-background-color: rgba(0, 0, 0, 0.1);");
@@ -109,7 +102,7 @@ public class MainPageController implements Initializable {
 
             app.setIconified(false);
         });
-    }
+    }*/
 
     public void GetEtsFilePath() {
         showHowToGetResourceDialog();
