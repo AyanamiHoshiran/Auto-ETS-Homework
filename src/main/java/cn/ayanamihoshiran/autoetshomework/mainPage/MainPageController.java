@@ -10,10 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.robot.Robot;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -47,16 +45,6 @@ public class MainPageController implements Initializable {
             updateEtsResourcePathLabel(new File(config.getEtsResourcePath()));
         }
     }
-
-/*    private void updateCoordinatesLabel(List<Double> recordCoordinates) {
-        if (recordCoordinates != null && recordCoordinates.size() == 2) {
-            int x = (int) Math.round(recordCoordinates.get(0));
-            int y = (int) Math.round(recordCoordinates.get(1));
-            recordCoordinatesLabel.setText("录音坐标: " + x + " , " + y);
-        } else {
-            recordCoordinatesLabel.setText("录音坐标: 未知");
-        }
-    }*/
 
     private void updateEtsResourcePathLabel(File etsResourcePath) {
         if (etsResourcePath != null && etsResourcePath.exists()) {
@@ -121,22 +109,9 @@ public class MainPageController implements Initializable {
                 Log.error("保存配置文件失败");
             }
             Log.info(config.getRecord_coordinates());
-//            updateCoordinatesLabel(record_coordinates);
 
             app.setIconified(false);
         });
-    }
-
-    public void SimulateRecordClick() throws InterruptedException {
-        app.setIconified(true);
-        Robot robot = new Robot();
-        robot.mouseMove(config.getRecord_coordinates().get(0), config.getRecord_coordinates().get(1));
-        for (int i = 0; i < 50; i++) {
-            robot.mouseMove(config.getRecord_coordinates().get(0), config.getRecord_coordinates().get(1));
-            robot.mouseClick(MouseButton.PRIMARY);
-            Thread.sleep(100);
-        }
-        app.setIconified(false);
     }
 
     public void GetEtsFilePath() {
