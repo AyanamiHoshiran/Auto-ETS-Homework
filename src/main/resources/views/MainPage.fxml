@@ -20,8 +20,8 @@
       </font>
    </Label>
 
-   <Button fx:id="getEtsFilePathButton" layoutX="67.0" layoutY="378.0" mnemonicParsing="false" onAction="#GetEtsFilePath" prefHeight="39.0" prefWidth="131.0" text="选择E听说资源目录" />
+   <Button layoutX="67.0" layoutY="378.0" mnemonicParsing="false" onAction="#GetEtsFilePath" prefHeight="39.0" prefWidth="131.0" text="选择E听说资源目录" />
 
-   <Button fx:id="getAnswersButton" layoutX="334.5" layoutY="230.5" mnemonicParsing="false" onAction="#GetAnswers" prefHeight="39.0" prefWidth="131.0" text="获取答案" />
+   <Button layoutX="334.5" layoutY="230.5" mnemonicParsing="false" onAction="#GetAnswers" prefHeight="39.0" prefWidth="131.0" text="获取答案" />
 
 </AnchorPane>
