@@ -23,4 +23,11 @@ public class Config {
      */
     private ArrayList<Double> record_coordinates;
 
+
+    /**
+     * ETS资源路径
+     */
+    @Builder.Default
+    private String etsResourcePath = "";
+
 }

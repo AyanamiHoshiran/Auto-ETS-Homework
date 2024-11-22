@@ -6,7 +6,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" prefHeight="311.0" prefWidth="669.0" spacing="20.0"
       xmlns="http://javafx.com/javafx/8.0.171">
     <fx:include source="toolbar.fxml"/>
-    <HBox styleClass="menu" VBox.vgrow="ALWAYS">
+    <HBox VBox.vgrow="ALWAYS">
         <VBox.margin>
             <Insets/>
         </VBox.margin><!--<Label fx:id="welcomeText" />

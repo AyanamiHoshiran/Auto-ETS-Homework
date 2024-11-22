@@ -17,7 +17,7 @@
         <cursor>
             <Cursor fx:constant="DEFAULT"/>
         </cursor>
-        <Label text=" AEH" styleClass="title"/>
+       <Label fx:id="versionLabel" styleClass="title"/>
         <Region HBox.hgrow="ALWAYS"/>
         <Button onAction="#minimizeProgramme" styleClass="exitButton">
             <graphic>

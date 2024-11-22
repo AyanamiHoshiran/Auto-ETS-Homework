@@ -1,7 +1,9 @@
 package cn.ayanamihoshiran.autoetshomework.globalUtils.controllers;
 
+import cn.ayanamihoshiran.autoetshomework.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
 
@@ -11,6 +13,7 @@ import static cn.ayanamihoshiran.autoetshomework.Application.app;
 public class Toolbar {
 
 
+    public Label versionLabel;
     @FXML
     private ToolBar toolbar;
     private double xOffset;
@@ -25,6 +28,7 @@ public class Toolbar {
 
     @FXML
     public void initialize() {
+        versionLabel.setText(" AEH " + Application.version + "v");
         toolbar.prefWidthProperty().bind(app.widthProperty());
         // 添加鼠标按下事件处理程序
         toolbar.setOnMousePressed(event -> {

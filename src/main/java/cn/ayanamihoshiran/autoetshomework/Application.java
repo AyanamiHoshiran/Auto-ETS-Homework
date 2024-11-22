@@ -21,11 +21,13 @@ public class Application extends javafx.application.Application {
     public static Stage app;
     public static Config config;
 
-    public static String version = "0.0.1";
+    public static final String version = "0.0.2";
 
     public static void main(String[] args) {
         gui = new GUI(500, 250, 800, 500);
-        config = (Config) ConfigManager.loadConfig(new Config());
+        config = ConfigManager.loadConfig();
+
+        Log.stereoLogo();
         launch();
     }
 

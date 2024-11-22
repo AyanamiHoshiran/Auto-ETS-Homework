@@ -1,32 +1,63 @@
 package cn.ayanamihoshiran.autoetshomework.globalUtils.loggerUtil;
 
+import cn.ayanamihoshiran.autoetshomework.Application;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Log {
     private static final Logger logger = LogManager.getLogger();
 
-    public static String LAUNCH = "/Launch:";
-    public static String FILE = "/File:";
-    public static String ERR = "/Err:";
-    public static String DOWNLOAD = "/Download:";
-    public static String UI_ACTION = "/UI: ";
+    public static final String LAUNCH = "/Launch:";
+    public static final String FILE = "/File:";
+    public static final String DOWNLOAD = "/Download:";
+    public static final String UI_ACTION = "/UI: ";
+    private static final String INFO = "/Info: ";
+    private static final String WARN = "/Warn: ";
+    private static final String ERROR = "/Error: ";
+    private static final String DEBUG = "/Debug: ";
 
 
     public static void info(Object msg) {
-        logger.info(" " + msg);
+        logger.info(INFO + " " + msg);
     }
 
     public static void warn(Object msg) {
-        logger.warn(" " + msg);
+        logger.warn(WARN + " " + msg);
     }
 
     public static void error(Object msg) {
-        logger.error(" " + msg);
+        logger.error(ERROR + " " + msg);
     }
 
     public static void debug(Object msg) {
-        logger.debug(" " + msg);
+        logger.debug(DEBUG + " " + msg);
+    }
+
+    public static void stereoLogo() {
+        info("""
+                                
+                                _                                    \s
+                     /\\        | |                                   \s
+                    /  \\  _   _| |_ ___                              \s
+                   / /\\ \\| | | | __/ _ \\                             \s
+                  / ____ \\ |_| | || (_) |                            \s
+                 /_/    \\_\\__,_|\\__\\___/                             \s
+                  ______ _______ _____                               \s
+                 |  ____|__   __/ ____|                              \s
+                 | |__     | | | (___                                \s
+                 |  __|    | |  \\___ \\                               \s
+                 | |____   | |  ____) |                              \s
+                 |______|  |_| |_____/                               \s
+                  _    _                                         _   \s
+                 | |  | |                                       | |  \s
+                 | |__| | ___  _ __ ___   _____      _____  _ __| | __
+                 |  __  |/ _ \\| '_ ` _ \\ / _ \\ \\ /\\ / / _ \\| '__| |/ /
+                 | |  | | (_) | | | | | |  __/\\ V  V / (_) | |  |   <\s
+                 |_|  |_|\\___/|_| |_| |_|\\___| \\_/\\_/ \\___/|_|  |_|\\_\\
+                                                                     \s
+                                                            版本:\s"""
+                + Application.version + "v" +
+                "\n                                           By Ayanami Hoshiran");
     }
 
 
