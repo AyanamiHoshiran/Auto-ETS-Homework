@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'cn.AyanamiHoshiran'
-version '0.0.2'
+version '0.0.3'
 
 repositories {
     mavenCentral()
@@ -88,7 +88,7 @@ jlink {
         imageOptions = ['--icon', 'src/main/resources/images/icon.ico']
         installerOptions = ['--win-menu', '--win-shortcut']
         installerType = 'exe'
-        appVersion = '1.0'
+        appVersion = version
         installerName = 'AutoETSHomework'
         mainClass = 'cn.ayanamihoshiran.autoetshomework.Application'
     }

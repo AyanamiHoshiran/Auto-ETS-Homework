@@ -19,6 +19,11 @@ public class Toolbar {
     private double xOffset;
     private double yOffset;
     public void exitProgramme() {
+        Thread.getAllStackTraces().keySet().forEach(thread -> {
+            if (thread != Thread.currentThread() && thread.getName().equals("AutoSelectThread")) {
+                thread.interrupt();
+            }
+        });
         Platform.exit();
     }
 

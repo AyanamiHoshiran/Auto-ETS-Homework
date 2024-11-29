@@ -73,6 +73,10 @@ public class Log {
         logger.error(status + " " + msg);
     }
 
+    public static void error(Object msg, Exception e) {
+        logger.error(ERROR + " " + msg, e);
+    }
+
     public static void debug(Object msg, String status) {
         logger.debug(status + " " + msg);
     }
