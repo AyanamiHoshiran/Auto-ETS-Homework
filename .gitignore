@@ -40,3 +40,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/.idea
+/AEH
+/config
+/model
+/src/test/java
+answer.txt
