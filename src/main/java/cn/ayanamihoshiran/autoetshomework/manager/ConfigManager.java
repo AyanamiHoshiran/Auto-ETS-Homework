@@ -30,7 +30,7 @@ public class ConfigManager {
             // 如果配置文件不存在，则创建配置文件
             if (!file.exists()) {
                 if (!new File(filePath).mkdirs()) {
-                    Log.error("Failed to create config file.", Log.FILE);
+                    Log.error("创建配置文件失败", Log.FILE);
                 }
                 // 创建配置对象
                 Config newConfig = Config.builder()
@@ -51,7 +51,7 @@ public class ConfigManager {
             return config;
 
         } catch (Exception e) {
-            Log.error("Failed to load config: " + e.getMessage());
+            Log.error("加载配置文件失败: " + e.getMessage());
         }
         return new Config();
     }
@@ -75,7 +75,7 @@ public class ConfigManager {
             return true;
 
         } catch (Exception e) {
-            Log.error("Failed to save config: " + e.getMessage());
+            Log.error("保存配置文件失败: " + e.getMessage());
         }
         return false;
     }
