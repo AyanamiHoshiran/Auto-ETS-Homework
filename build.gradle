@@ -5,11 +5,12 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.8.10'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.10'
     id 'org.openjfx.javafxplugin' version '0.0.13'
+
     id 'org.beryx.jlink' version '2.25.0'
 }
 
 group 'cn.AyanamiHoshiran'
-version '0.0.3'
+version '0.0.4'
 
 repositories {
     mavenCentral()

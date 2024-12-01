@@ -58,7 +58,7 @@ public class MainPageController implements Initializable {
         directoryChooser.setInitialDirectory(Path.of(System.getProperty("user.home")).resolve("AppData/Roaming").toFile());
         File file = directoryChooser.showDialog(app);
         if (file == null || !file.exists()) {
-            showAlert("错误的文件夹路径", "请先选择ETS资源文件夹");
+            showAlert("错误的文件夹路径", "请先选择ETS资源文件夹", Alert.AlertType.ERROR);
             return;
         }
         updateEtsResourcePathLabel(file);
@@ -71,14 +71,14 @@ public class MainPageController implements Initializable {
     public void GetAnswers() {
         String resourcePath = config.getEtsResourcePath();
         if (resourcePath == null || resourcePath.isEmpty() || resourcePath.equals("null")) {
-            showAlert("错误的文件夹路径", "请先选择ETS资源文件夹");
+            showAlert("错误的文件夹路径", "请先选择ETS资源文件夹", Alert.AlertType.ERROR);
             return;
         }
 
         try {
             GetAnswer.use(resourcePath);
         } catch (Exception e) {
-            showAlert("获取答案失败", "获取答案失败: " + e.getMessage());
+            showAlert("获取答案失败", "获取答案失败: " + e.getMessage(), Alert.AlertType.ERROR);
             return;
         }
         etsExamAnswer.setText("答案已生成");
@@ -143,7 +143,7 @@ public class MainPageController implements Initializable {
             Platform.runLater(() -> {
                 updateEtsResourcePathLabel(path.toFile());
                 config.setEtsResourcePath(String.valueOf(path.toFile()));
-                showAlert("成功", "自动选择ETS资源路径成功!");
+                showAlert("成功", "自动选择ETS资源路径成功!", Alert.AlertType.INFORMATION);
             });
         } catch (Exception e) {
             Log.error("自动选择ETS资源路径失败: " + e.getMessage());
@@ -152,8 +152,8 @@ public class MainPageController implements Initializable {
         }
     }
 
-    private void showAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);

@@ -95,6 +95,7 @@ public class GetAnswer {
 
 
     private static void parseAndAddAnswer(String jsonContent, ArrayList<ChooseAnswer> chooseAnswers , ArrayList<ListenAnswer> listenAnswers, ArrayList<ReproduceAnswer> reproduceAnswers) {
+        jsonContent = jsonContent.replace("nbsp;", "");
         try {
             Log.info("jsonContent: " + jsonContent);
             ChooseAnswer chooseAnswer = ChooseAnswer.Companion.parse(jsonContent);
