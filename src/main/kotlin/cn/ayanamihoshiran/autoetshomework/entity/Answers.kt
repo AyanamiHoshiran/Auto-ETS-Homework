@@ -57,9 +57,9 @@ data class ListenAnswer(
     fun getTheBestAnswer(index: AtomicInteger): String {
         return info.question.joinToString("") {
             if (info.question.size > 1 && it != info.question.first()) {
-                "\n${index.incrementAndGet()}: ${it.std[2].value}"
+                if (it.std.size > 2) "\n${index.incrementAndGet()}: ${it.std[2].value}" else "\n${index.incrementAndGet()}: ${it.std.last().value}"
             } else {
-                 it.std[2].value
+                if (it.std.size > 2) it.std[2].value else it.std.last().value
             }
         }
     }
