@@ -14,15 +14,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static cn.ayanamihoshiran.autoetshomework.tools.getExamAnswer.LatestModifiedFolder.getLatestModifiedFolder;
-
 public class GetAnswer {
-    public static void use(String resourcePath) throws Exception{
-        Path path = Path.of(resourcePath);
-        String latestFolder = getLatestModifiedFolder(path);
-        Log.info("Latest modified folder: " + latestFolder);
-
-        path = path.resolve(latestFolder);
+    public static void use(Path path) throws Exception{
 
         ArrayList<ChooseAnswer> chooseAnswers = new ArrayList<>();
         ArrayList<ListenAnswer> listenAnswers = new ArrayList<>();
@@ -61,7 +54,7 @@ public class GetAnswer {
         }
 
         try {
-            Path answerFiles = Path.of("./answer.txt");
+            Path answerFiles = Path.of("./answer_" + path.getFileName() + ".txt");
             if (Files.exists(answerFiles)) {
                 Log.warn("答案文件已存在，将覆盖原文件");
             }

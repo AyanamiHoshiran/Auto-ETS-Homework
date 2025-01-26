@@ -8,21 +8,20 @@ import cn.ayanamihoshiran.autoetshomework.tools.getExamAnswer.GetAnswer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import static cn.ayanamihoshiran.autoetshomework.Application.app;
 import static cn.ayanamihoshiran.autoetshomework.Application.config;
+import static cn.ayanamihoshiran.autoetshomework.tools.getExamAnswer.LatestModifiedFolder.getLatestModifiedFolder;
 
 public class MainPageController implements Initializable {
     private static boolean isAutoSelect = false;
@@ -76,7 +75,10 @@ public class MainPageController implements Initializable {
         }
 
         try {
-            GetAnswer.use(resourcePath);
+
+            Path latestFolder = Path.of(resourcePath, getLatestModifiedFolder(Path.of(resourcePath)));
+            Log.info("最新文件夹: " + latestFolder);
+            GetAnswer.use(latestFolder);
         } catch (Exception e) {
             showAlert("获取答案失败", "获取答案失败: " + e.getMessage(), Alert.AlertType.ERROR);
             return;
@@ -158,5 +160,66 @@ public class MainPageController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    public void GetHomeworkList() {
+        String resourcePath = config.getEtsResourcePath();
+        if (resourcePath == null || resourcePath.isEmpty() || resourcePath.equals("null")) {
+            showAlert("错误的文件夹路径", "请先选择ETS资源文件夹", Alert.AlertType.ERROR);
+            return;
+        }
+
+
+        File[] files;
+        try {
+            files = Arrays.stream(Objects.requireNonNull(new File(resourcePath).listFiles()))
+                    .filter(File::isDirectory)
+                    .filter(file -> file.getName().matches("\\d+"))
+                    .sorted(Comparator.comparingLong(File::lastModified).reversed())
+                    .limit(20)
+                    .toArray(File[]::new);
+        } catch (Exception e) {
+            showAlert("获取作业列表失败", "获取作业列表失败: " + e.getMessage(), Alert.AlertType.ERROR);
+            return;
+        }
+
+        if (files.length == 0) {
+            showAlert("获取作业列表失败", "未找到作业列表", Alert.AlertType.ERROR);
+            return;
+        }
+
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("选择作业");
+        dialog.setHeaderText("请选择要获取答案的作业");
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+        choiceBox.setTooltip(new Tooltip("请选择要获取答案的作业"));
+        for (File file : files) {
+            if (file.isDirectory()) {
+                choiceBox.getItems().add(file.getName() + "习题 - " + new Date(file.lastModified()).toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            }
+        }
+        dialog.getDialogPane().setContent(choiceBox);
+
+        dialog.setResultConverter(buttonType -> {
+            if (buttonType == ButtonType.OK) {
+                return choiceBox.getValue();
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(s -> {
+            try {
+                GetAnswer.use(Path.of(resourcePath, s.split("习题")[0]));
+            } catch (Exception e) {
+                showAlert("获取答案失败", "获取答案失败: " + e.getMessage(), Alert.AlertType.ERROR);
+                Log.error("获取答案失败", e);
+            }
+        });
+
+
+
     }
 }
