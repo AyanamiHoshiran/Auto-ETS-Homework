@@ -40,7 +40,9 @@ data class ReproduceInfo(
 data class Std(
     val value: String,
     val ai: String,
-    val audio: String
+    val audio: String,
+    val th: String,
+    val xth: String
 )
 
 // 听后回答答案Json生成器
@@ -129,6 +131,34 @@ data class ChooseQuestion(
     val answer: String,
     val xxlist: List<Option>
 )
+
+@Serializable
+data class FillInAnswer(
+    val info: FillInInfo,
+    val structure_type: String
+) {
+    companion object {
+        fun parse(jsonString: String): FillInAnswer {
+            return json.decodeFromString(jsonString)
+        }
+    }
+    fun getAllAnswers(): String {
+        return info.std.joinToString { it.value }
+    }
+}
+
+@Serializable
+data class FillInInfo(
+    val analyze: String,
+    val audio: String,
+    val image: String,
+    val ref: List<String>,
+    val std: List<Std>,
+    val stid: String,
+    val topic: String,
+    val value: String
+)
+
 
 @Serializable
 data class Option(

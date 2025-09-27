@@ -1,6 +1,7 @@
 package cn.ayanamihoshiran.autoetshomework.tools.getExamAnswer;
 
 import cn.ayanamihoshiran.autoetshomework.entity.ChooseAnswer;
+import cn.ayanamihoshiran.autoetshomework.entity.FillInAnswer;
 import cn.ayanamihoshiran.autoetshomework.entity.ListenAnswer;
 import cn.ayanamihoshiran.autoetshomework.entity.ReproduceAnswer;
 import cn.ayanamihoshiran.autoetshomework.globalUtils.loggerUtil.Log;
@@ -20,6 +21,7 @@ public class GetAnswer {
         ArrayList<ChooseAnswer> chooseAnswers = new ArrayList<>();
         ArrayList<ListenAnswer> listenAnswers = new ArrayList<>();
         ArrayList<ReproduceAnswer> reproduceAnswers = new ArrayList<>();
+        ArrayList<FillInAnswer> fillInAnswers = new ArrayList<>();
 
 
         // 获取每个content里面的content.json，并打印文件内部的json内容
@@ -28,7 +30,7 @@ public class GetAnswer {
                 .forEach(file -> {
                     try {
                         String jsonContent = Files.readString(file.toPath().resolve("content.json"));
-                        parseAndAddAnswer(jsonContent, chooseAnswers, listenAnswers, reproduceAnswers);
+                        parseAndAddAnswer(jsonContent, chooseAnswers, listenAnswers, reproduceAnswers, fillInAnswers);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -52,13 +54,16 @@ public class GetAnswer {
         if (!reproduceAnswers.isEmpty()) {
             reproduceAnswers.forEach(reproduceAnswer -> Log.info(index.incrementAndGet() + ": " + reproduceAnswer.getTheBestAnswer()));
         }
+        if (!fillInAnswers.isEmpty()) {
+            fillInAnswers.forEach(fillInAnswer -> Log.info(index.incrementAndGet() + ": " + fillInAnswer.getAllAnswers()));
+        }
 
         try {
             Path answerFiles = Path.of("./answer_" + path.getFileName() + ".txt");
             if (Files.exists(answerFiles)) {
                 Log.warn("答案文件已存在，将覆盖原文件");
             }
-            Files.writeString(answerFiles, generateAnswerContent(chooseAnswers, listenAnswers, reproduceAnswers));
+            Files.writeString(answerFiles, generateAnswerContent(chooseAnswers, listenAnswers, reproduceAnswers, fillInAnswers));
 
             Desktop.getDesktop().open(answerFiles.toFile());
         } catch (IOException e) {
@@ -66,7 +71,7 @@ public class GetAnswer {
         }
     }
 
-    private static String generateAnswerContent(ArrayList<ChooseAnswer> chooseAnswers, ArrayList<ListenAnswer> listenAnswers, ArrayList<ReproduceAnswer> reproduceAnswers) {
+    private static String generateAnswerContent(ArrayList<ChooseAnswer> chooseAnswers, ArrayList<ListenAnswer> listenAnswers, ArrayList<ReproduceAnswer> reproduceAnswers, ArrayList<FillInAnswer> fillInAnswers) {
         StringBuilder content = new StringBuilder();
         AtomicInteger index = new AtomicInteger();
 
@@ -81,13 +86,16 @@ public class GetAnswer {
         if (!reproduceAnswers.isEmpty()) {
             reproduceAnswers.forEach(reproduceAnswer -> content.append(index.incrementAndGet()).append(": ").append(reproduceAnswer.getTheBestAnswer()).append("\n\n"));
         }
+        if (!fillInAnswers.isEmpty()) {
+            fillInAnswers.forEach(fillInAnswer -> content.append(index.incrementAndGet()).append(": ").append(fillInAnswer.getAllAnswers()).append("\n\n"));
+        }
 
         return content.toString();
     }
 
 
 
-    private static void parseAndAddAnswer(String jsonContent, ArrayList<ChooseAnswer> chooseAnswers , ArrayList<ListenAnswer> listenAnswers, ArrayList<ReproduceAnswer> reproduceAnswers) {
+    private static void parseAndAddAnswer(String jsonContent, ArrayList<ChooseAnswer> chooseAnswers , ArrayList<ListenAnswer> listenAnswers, ArrayList<ReproduceAnswer> reproduceAnswers, ArrayList<FillInAnswer> fillInAnswers) {
         jsonContent = jsonContent.replace("nbsp;", "");
         try {
             Log.info("jsonContent: " + jsonContent);
@@ -107,6 +115,12 @@ public class GetAnswer {
         try {
             ReproduceAnswer reproduceAnswer = ReproduceAnswer.Companion.parse(jsonContent);
             reproduceAnswers.add(reproduceAnswer);
+        } catch (Exception ignored) {
+        }
+
+        try {
+            FillInAnswer fillInAnswer = FillInAnswer.Companion.parse(jsonContent);
+            fillInAnswers.add(fillInAnswer);
         } catch (Exception ignored) {
         }
     }
