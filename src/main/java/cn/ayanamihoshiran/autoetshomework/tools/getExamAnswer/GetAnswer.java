@@ -85,6 +85,7 @@ public class GetAnswer {
         }
         if (!reproduceAnswers.isEmpty()) {
             reproduceAnswers.forEach(reproduceAnswer -> content.append(index.incrementAndGet()).append(": ").append(reproduceAnswer.getTheBestAnswer()).append("\n\n"));
+            content.append("\n====================\n\n");
         }
         if (!fillInAnswers.isEmpty()) {
             fillInAnswers.forEach(fillInAnswer -> content.append(index.incrementAndGet()).append(": ").append(fillInAnswer.getAllAnswers()).append("\n\n"));

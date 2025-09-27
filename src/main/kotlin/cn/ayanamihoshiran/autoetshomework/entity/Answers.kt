@@ -41,8 +41,8 @@ data class Std(
     val value: String,
     val ai: String,
     val audio: String,
-    val th: String,
-    val xth: String
+    val th: String? = null,
+    val xth: String? = null
 )
 
 // 听后回答答案Json生成器
