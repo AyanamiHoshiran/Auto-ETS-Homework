@@ -32,13 +32,15 @@ jobs:
             echo "version=$version" >> $env:GITHUB_OUTPUT
           }
 
-      - name: 打包产物（排除 .ico）
+      - name: 打包产物为 zip
         shell: pwsh
         run: |
+          $src = "./build/jpackage/AutoETSHomework-${{ steps.get_version.outputs.version }}"
           mkdir dist
-          Get-ChildItem -Path "./build/jpackage/AutoETSHomework-${{ steps.get_version.outputs.version }}" | Where-Object { $_.Extension -ne ".ico" } | ForEach-Object {
-            Copy-Item $_.FullName -Destination "dist" -Recurse
-          }
+          Copy-Item "$src\*.exe" dist
+          Copy-Item "$src\app" dist -Recurse
+          Copy-Item "$src\runtime" dist -Recurse
+          Compress-Archive -Path dist\* -DestinationPath "dist/AutoETSHomework-${{ steps.get_version.outputs.version }}.zip"
 
       - name: 创建 Release 并上传产物
         uses: softprops/action-gh-release@v2
