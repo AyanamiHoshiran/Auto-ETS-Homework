@@ -39,6 +39,7 @@ public class GetAnswer {
         Log.info("chooseAnswers: " + chooseAnswers);
         Log.info("listenAnswers: " + listenAnswers);
         Log.info("reproduceAnswers: " + reproduceAnswers);
+        Log.info("fillInAnswers: " + fillInAnswers);
 
         AtomicInteger index = new AtomicInteger();
         if (!chooseAnswers.isEmpty()) {
@@ -53,6 +54,8 @@ public class GetAnswer {
         }
         if (!reproduceAnswers.isEmpty()) {
             reproduceAnswers.forEach(reproduceAnswer -> Log.info(index.incrementAndGet() + ": " + reproduceAnswer.getTheBestAnswer()));
+            Log.info("\n====================");
+            Log.info("");
         }
         if (!fillInAnswers.isEmpty()) {
             fillInAnswers.forEach(fillInAnswer -> Log.info(index.incrementAndGet() + ": " + fillInAnswer.getAllAnswers()));
@@ -76,19 +79,23 @@ public class GetAnswer {
         AtomicInteger index = new AtomicInteger();
 
         if (!chooseAnswers.isEmpty()) {
+            content.append("听后选择: \n\n");
             chooseAnswers.forEach(chooseAnswer -> content.append(index.incrementAndGet()).append(": ").append(chooseAnswer.getAllAnswers()).append("\n\n"));
-            content.append("\n====================\n\n");
+            content.append("====================\n");
         }
         if (!listenAnswers.isEmpty()) {
+            content.append("听后回答: \n\n");
             listenAnswers.forEach(listenAnswer -> content.append(index.incrementAndGet()).append(": ").append(listenAnswer.getTheBestAnswer(index)).append("\n\n"));
-            content.append("\n====================\n\n");
-        }
-        if (!reproduceAnswers.isEmpty()) {
-            reproduceAnswers.forEach(reproduceAnswer -> content.append(index.incrementAndGet()).append(": ").append(reproduceAnswer.getTheBestAnswer()).append("\n\n"));
-            content.append("\n====================\n\n");
+            content.append("====================\n");
         }
         if (!fillInAnswers.isEmpty()) {
+            content.append("听后填空: \n\n");
             fillInAnswers.forEach(fillInAnswer -> content.append(index.incrementAndGet()).append(": ").append(fillInAnswer.getAllAnswers()).append("\n\n"));
+            content.append("====================\n");
+        }
+        if (!reproduceAnswers.isEmpty()) {
+            content.append("听后转述: \n\n");
+            reproduceAnswers.forEach(reproduceAnswer -> content.append(index.incrementAndGet()).append(": ").append(reproduceAnswer.getTheBestAnswer()).append("\n\n"));
         }
 
         return content.toString();
@@ -100,27 +107,35 @@ public class GetAnswer {
         jsonContent = jsonContent.replace("nbsp;", "");
         Log.info("jsonContent: " + jsonContent);
 
+        Object answer;
         try {
-            chooseAnswers.add(ChooseAnswer.Companion.parse(jsonContent));
-            return;
-        } catch (Exception ignored) {}
-
-        try {
-            listenAnswers.add(ListenAnswer.Companion.parse(jsonContent));
-            return;
-        } catch (Exception ignored) {}
-
-        try {
-            FillInAnswer fillInAnswer = FillInAnswer.Companion.parse(jsonContent);
-            if ("collector.fill".equals(fillInAnswer.getStructure_type())) {
-                fillInAnswers.add(fillInAnswer);
+            answer = ChooseAnswer.Companion.parse(jsonContent);
+            if ("collector.choose".equals(((ChooseAnswer) answer).getStructure_type())) {
+                chooseAnswers.add((ChooseAnswer) answer);
+                return;
             }
         } catch (Exception ignored) {}
 
         try {
-            ReproduceAnswer reproduceAnswer = ReproduceAnswer.Companion.parse(jsonContent);
-            if ("collector.picture".equals(reproduceAnswer.getStructure_type())) {
-                reproduceAnswers.add(reproduceAnswer);
+            answer = ListenAnswer.Companion.parse(jsonContent);
+            if ("collector.listen".equals(((ListenAnswer) answer).getStructure_type())) {
+                listenAnswers.add((ListenAnswer) answer);
+                return;
+            }
+        } catch (Exception ignored) {}
+
+        try {
+            answer = FillInAnswer.Companion.parse(jsonContent);
+            if ("collector.fill".equals(((FillInAnswer) answer).getStructure_type())) {
+                fillInAnswers.add((FillInAnswer) answer);
+                return;
+            }
+        } catch (Exception ignored) {}
+
+        try {
+            answer = ReproduceAnswer.Companion.parse(jsonContent);
+            if ("collector.picture".equals(((ReproduceAnswer) answer).getStructure_type())) {
+                reproduceAnswers.add((ReproduceAnswer) answer);
             }
         } catch (Exception ignored) {}
     }
