@@ -96,33 +96,32 @@ public class GetAnswer {
 
 
 
-    private static void parseAndAddAnswer(String jsonContent, ArrayList<ChooseAnswer> chooseAnswers , ArrayList<ListenAnswer> listenAnswers, ArrayList<ReproduceAnswer> reproduceAnswers, ArrayList<FillInAnswer> fillInAnswers) {
+    private static void parseAndAddAnswer(String jsonContent, ArrayList<ChooseAnswer> chooseAnswers, ArrayList<ListenAnswer> listenAnswers, ArrayList<ReproduceAnswer> reproduceAnswers, ArrayList<FillInAnswer> fillInAnswers) {
         jsonContent = jsonContent.replace("nbsp;", "");
-        try {
-            Log.info("jsonContent: " + jsonContent);
-            ChooseAnswer chooseAnswer = ChooseAnswer.Companion.parse(jsonContent);
-            chooseAnswers.add(chooseAnswer);
-            return;
-        } catch (Exception ignored) {
-        }
+        Log.info("jsonContent: " + jsonContent);
 
         try {
-            ListenAnswer listenAnswer = ListenAnswer.Companion.parse(jsonContent);
-            listenAnswers.add(listenAnswer);
+            chooseAnswers.add(ChooseAnswer.Companion.parse(jsonContent));
             return;
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
 
         try {
-            ReproduceAnswer reproduceAnswer = ReproduceAnswer.Companion.parse(jsonContent);
-            reproduceAnswers.add(reproduceAnswer);
-        } catch (Exception ignored) {
-        }
+            listenAnswers.add(ListenAnswer.Companion.parse(jsonContent));
+            return;
+        } catch (Exception ignored) {}
 
         try {
             FillInAnswer fillInAnswer = FillInAnswer.Companion.parse(jsonContent);
-            fillInAnswers.add(fillInAnswer);
-        } catch (Exception ignored) {
-        }
+            if ("collector.fill".equals(fillInAnswer.getStructure_type())) {
+                fillInAnswers.add(fillInAnswer);
+            }
+        } catch (Exception ignored) {}
+
+        try {
+            ReproduceAnswer reproduceAnswer = ReproduceAnswer.Companion.parse(jsonContent);
+            if ("collector.picture".equals(reproduceAnswer.getStructure_type())) {
+                reproduceAnswers.add(reproduceAnswer);
+            }
+        } catch (Exception ignored) {}
     }
 }
