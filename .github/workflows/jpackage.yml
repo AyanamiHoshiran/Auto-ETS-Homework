@@ -24,9 +24,13 @@ jobs:
 
       - name: 获取版本号
         id: get_version
+        shell: pwsh
         run: |
-          version=$(ls ./build/jpackage | grep -oP 'AutoETSHomework-\d+\.\d+\.\d+' | sed -E 's/AutoETSHomework-//')
-          echo "version=$version" >> $GITHUB_OUTPUT
+          $folder = Get-ChildItem ./build/jpackage | Where-Object { $_.Name -match '^AutoETSHomework-\d+\.\d+\.\d+$' } | Select-Object -First 1
+          if ($folder) {
+            $version = $folder.Name -replace '^AutoETSHomework-',''
+            echo "version=$version" >> $env:GITHUB_OUTPUT
+          }
 
       - name: 打包产物（排除 .ico）
         run: |
