@@ -10,7 +10,7 @@ plugins {
 }
 
 group 'cn.AyanamiHoshiran'
-version '0.0.6'
+version '0.0.7'
 
 repositories {
     mavenCentral()
@@ -83,7 +83,7 @@ jlink {
     imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
-        name = 'AutoETSHomework'
+        name = "AutoETSHomework-${version}"
     }
     jpackage {
         imageOptions = ['--icon', 'src/main/resources/images/icon.ico']

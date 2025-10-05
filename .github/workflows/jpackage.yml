@@ -1,0 +1,45 @@
+name: jpackage
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 构建项目
+        run: |
+          ./gradlew clean jpackage
+
+      - name: 获取版本号
+        id: get_version
+        run: |
+          version=$(ls ./build/jpackage | grep -oP 'AutoETSHomework-\d+\.\d+\.\d+' | sed -E 's/AutoETSHomework-//')
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: 打包产物（排除 .ico）
+        run: |
+          mkdir -p dist
+          for file in ./build/jpackage/AutoETSHomework-${{ steps.get_version.outputs.version }}/*; do
+            if [[ ! $file =~ \.ico$ ]]; then
+              cp -r "$file" dist/
+            fi
+          done
+
+      - name: 创建 Release 并上传产物
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: AutoETSHomework-${{ steps.get_version.outputs.version }}
+          draft: true
+          files: dist/*
