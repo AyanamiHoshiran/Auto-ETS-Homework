@@ -33,13 +33,13 @@ jobs:
           }
 
       - name: 打包产物（排除 .ico）
+        shell: pwsh
         run: |
-          mkdir -p dist
-          for file in ./build/jpackage/AutoETSHomework-${{ steps.get_version.outputs.version }}/*; do
-            if [[ ! $file =~ \.ico$ ]]; then
-              cp -r "$file" dist/
-            fi
-          done
+          mkdir dist
+          Get-ChildItem -Path "./build/jpackage/AutoETSHomework-${{ steps.get_version.outputs.version }}" | Where-Object { $_.Extension -ne ".ico" } | ForEach-Object {
+          Copy-Item $_.FullName -Destination "dist" -Recurse
+        }
+
 
       - name: 创建 Release 并上传产物
         uses: softprops/action-gh-release@v2
