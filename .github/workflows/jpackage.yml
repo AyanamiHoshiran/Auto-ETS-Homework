@@ -37,9 +37,8 @@ jobs:
         run: |
           mkdir dist
           Get-ChildItem -Path "./build/jpackage/AutoETSHomework-${{ steps.get_version.outputs.version }}" | Where-Object { $_.Extension -ne ".ico" } | ForEach-Object {
-          Copy-Item $_.FullName -Destination "dist" -Recurse
-        }
-
+            Copy-Item $_.FullName -Destination "dist" -Recurse
+          }
 
       - name: 创建 Release 并上传产物
         uses: softprops/action-gh-release@v2
