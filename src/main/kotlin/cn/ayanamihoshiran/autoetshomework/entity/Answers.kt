@@ -7,6 +7,11 @@ import java.util.concurrent.atomic.AtomicInteger
 
 private val json = Json { ignoreUnknownKeys = true }
 
+// Utility function to strip HTML tags from strings
+private fun String.stripHtmlTags(): String {
+    return this.replace(Regex("<[^>]*>"), "")
+}
+
 // 听后转述答案Json解析器
 @Serializable
 data class ReproduceAnswer(
@@ -19,7 +24,7 @@ data class ReproduceAnswer(
         }
     }
     fun getTheBestAnswer(): String {
-        return info.std.last().value
+        return info.std.last().value.stripHtmlTags()
     }
 }
 
@@ -59,9 +64,9 @@ data class ListenAnswer(
     fun getTheBestAnswer(index: AtomicInteger): String {
         return info.question.joinToString("") {
             if (info.question.size > 1 && it != info.question.first()) {
-                if (it.std.size > 2) "\n${index.incrementAndGet()}: ${it.std[2].value}" else "\n${index.incrementAndGet()}: ${it.std.last().value}"
+                if (it.std.size > 2) "\n${index.incrementAndGet()}: ${it.std[2].value.stripHtmlTags()}" else "\n${index.incrementAndGet()}: ${it.std.last().value.stripHtmlTags()}"
             } else {
-                if (it.std.size > 2) it.std[2].value else it.std.last().value
+                if (it.std.size > 2) it.std[2].value.stripHtmlTags() else it.std.last().value.stripHtmlTags()
             }
         }
     }
@@ -105,7 +110,7 @@ data class ChooseAnswer(
         }
     }
     fun getAllAnswers(): String {
-        return info.xtlist.joinToString(", ") { it.answer }
+        return info.xtlist.joinToString(", ") { it.answer.stripHtmlTags() }
     }
 }
 
@@ -143,7 +148,7 @@ data class FillInAnswer(
         }
     }
     fun getAllAnswers(): String {
-        return info.std.joinToString { it.value }
+        return info.std.joinToString { it.value.stripHtmlTags() }
     }
 }
 
