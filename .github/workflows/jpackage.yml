@@ -1,8 +1,9 @@
 name: jpackage
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
   build-and-release:
