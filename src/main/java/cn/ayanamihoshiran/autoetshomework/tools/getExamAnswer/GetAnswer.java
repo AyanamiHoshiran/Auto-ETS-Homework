@@ -118,7 +118,7 @@ public class GetAnswer {
 
         try {
             answer = ListenAnswer.Companion.parse(jsonContent);
-            if ("collector.listen".equals(((ListenAnswer) answer).getStructure_type())) {
+            if ("collector.dialogue".equals(((ListenAnswer) answer).getStructure_type())) {
                 listenAnswers.add((ListenAnswer) answer);
                 return;
             }

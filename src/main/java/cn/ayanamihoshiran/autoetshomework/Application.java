@@ -21,7 +21,7 @@ public class Application extends javafx.application.Application {
     public static Stage app;
     public static Config config;
 
-    public static final String version = "0.0.8";
+    public static final String version = "0.0.9";
 
     public static void main(String[] args) {
         gui = new GUI(500, 250, 800, 500);
