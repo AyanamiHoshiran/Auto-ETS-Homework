@@ -31,14 +31,14 @@ data class ReproduceAnswer(
 @Serializable
 data class ReproduceInfo(
     val stid: String,
-    val value: String,
-    val image: String,
-    val audio: String,
-    val analyze: String,
+    val value: String? = null,
+    val image: String? = null,
+    val audio: String? = null,
+    val analyze: String? = null,
     val std: List<Std>,
-    val ref: List<String>,
-    val keypoint: String,
-    val topic: String
+    val ref: List<String>? = null,
+    val keypoint: String? = null,
+    val topic: String? = null
 )
 
 @Serializable
@@ -130,9 +130,9 @@ data class ChooseQuestion(
     val xt_nr: String,
     val xt_wj: String,
     val xt_wj2: String? = null,
-    val xt_value: String,
-    val xt_analy: String,
-    val xt_pic: String,
+    val xt_value: String? = null,
+    val xt_analy: String? = null,
+    val xt_pic: String? = null,
     val answer: String,
     val xxlist: List<Option>
 )
