@@ -110,7 +110,9 @@ data class ChooseAnswer(
         }
     }
     fun getAllAnswers(): String {
-        return info.xtlist.joinToString(", ") { it.answer.stripHtmlTags() }
+        return info.xtlist.joinToString(", ") { q ->
+            q.xxlist.firstOrNull { opt -> opt.xx_mc == q.answer }?.let { "${q.answer}: ${it.xx_nr.stripHtmlTags()}" } ?: q.answer
+        }
     }
 }
 
